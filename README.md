@@ -61,9 +61,9 @@ is getting triggered more often, which can lead to increased costs.
 
 To teardown the notifier delete the stack through the Web Console, or use the incantation below:
 
-    ```bash
-    $ aws cloudformation delete-stack --stack-name cp-slack-notifier
-    ```
+```bash
+$ aws cloudformation delete-stack --stack-name cp-slack-notifier
+```
 
 -----
 Copyright 2017, Symphonia LLC
