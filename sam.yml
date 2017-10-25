@@ -1,0 +1,41 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Code Pipeline Slack Notifier
+
+Resources:
+  CloudPipelineEvent:
+    Type: "AWS::Events::Rule"
+    Properties:
+      Description: "CloudPipelineEvent"
+      EventPattern:
+        source:
+        - aws.codepipeline
+        detail-type:
+        - CodePipeline Pipeline Execution State Change
+      State: "ENABLED"
+      Targets:
+        -
+          Arn: !GetAtt CPLambda.Arn
+          Id: "MyCloudPipelineTarget"
+
+  CPLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: io.symphonia.CPLambda::handler
+      Runtime: java8
+      MemorySize: 512
+      Timeout: 10
+      CodeUri: ./target/lambda.jar
+      Environment:
+        Variables:
+          # Enter your actual Slack URL in the value below
+          SLACK_URL: ""
+
+  CPLambdaInvokePermission:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      FunctionName: !GetAtt CPLambda.Arn
+      Action: 'lambda:InvokeFunction'
+      Principal: events.amazonaws.com
+      SourceArn: !GetAtt CloudPipelineEvent.Arn
+
