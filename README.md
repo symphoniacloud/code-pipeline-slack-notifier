@@ -16,7 +16,7 @@ from your AWS user.
 1. Update the `SLACK_URL` in the `sam.yml` file to be your Slack incoming webhook URL. It should look something
 like `https://hooks.slack.com/services/....`
 
-1. Run the following from a terminal, substituting the `YOUR_S3_BUCKET` for the S3 bucket described above:
+1. Run the following from a terminal, substituting `YOUR_S3_BUCKET` for the S3 bucket described above:
 
     ```bash
     $ mvn package
@@ -48,16 +48,14 @@ of the `CloudPipelineEvent` in the `sam.yml` file as follows:
     ```
 
 1. Similarly, to only notify for certain pipelines you can use the `pipeline` attribute of the `detail` element.
-
 For more details of event filtering, see the documentation at http://docs.aws.amazon.com/codepipeline/latest/userguide/detect-state-changes-cloudwatch-events.html
 
-1. You can also listen for different, more granular, events within CodePipeline. This is detailed in the link above.
+1. You can also listen for different, more granular, events within CodePipeline. This is also detailed in the link above.
 
-1. You can also do filtering in code, in the Lambda function, but that will mean your Lambda function
+1. You can perform filtering in code, in the Lambda function, but that will mean your Lambda function
 is getting triggered more often, which can lead to increased costs.
 
-1. Another nice extension would be different types of message for different kinds of events - you can do this by modifying
-the message POSTed to Slack. See https://api.slack.com/docs/messages for more details
+1. Another nice extension would be different types of message for different kinds of events, or posting to different channels for different pipelines. Either of these are possible by modifying the message POSTed to Slack. See https://api.slack.com/docs/messages for more details
 
 ## Teardown
 
