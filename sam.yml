@@ -3,10 +3,10 @@ Transform: AWS::Serverless-2016-10-31
 Description: Code Pipeline Slack Notifier
 
 Resources:
-  CloudPipelineEvent:
-    Type: "AWS::Events::Rule"
+  CodePipelineEvent:
+    Type: AWS::Events::Rule
     Properties:
-      Description: "CloudPipelineEvent"
+      Description: "CodePipelineEvent"
       EventPattern:
         source:
         - aws.codepipeline
@@ -16,7 +16,7 @@ Resources:
       Targets:
         -
           Arn: !GetAtt CPLambda.Arn
-          Id: "MyCloudPipelineTarget"
+          Id: "MyCodePipelineTarget"
 
   CPLambda:
     Type: AWS::Serverless::Function
@@ -32,10 +32,10 @@ Resources:
           SLACK_URL: ""
 
   CPLambdaInvokePermission:
-    Type: 'AWS::Lambda::Permission'
+    Type: AWS::Lambda::Permission
     Properties:
       FunctionName: !GetAtt CPLambda.Arn
       Action: 'lambda:InvokeFunction'
       Principal: events.amazonaws.com
-      SourceArn: !GetAtt CloudPipelineEvent.Arn
+      SourceArn: !GetAtt CodePipelineEvent.Arn
 
