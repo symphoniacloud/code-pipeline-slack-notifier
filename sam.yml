@@ -28,8 +28,8 @@ Resources:
       CodeUri: ./target/lambda.jar
       Environment:
         Variables:
-          # Enter your actual Slack URL in the value below
-          SLACK_URL: ""
+          # Enter your actual Slack URL in the value below. See https://my.slack.com/services/new/incoming-webhook/
+          SLACK_URL: "https://hooks.slack.com/services/TXXX/BXXX/xxx"
 
   CPLambdaInvokePermission:
     Type: AWS::Lambda::Permission
