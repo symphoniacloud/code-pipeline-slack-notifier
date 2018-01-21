@@ -1,0 +1,76 @@
+# If you are using serverless from https://serverless.org this is your file :-)
+service: slack
+provider:
+  name: aws
+  runtime: java8
+  stage: dev
+  region: eu-central-1
+  profile: default
+  memorySize: 512
+  timeout: 10
+  deploymentBucket:
+    name: ${self:custom.stage}-lambda
+    serverSideEncryption: AES256
+  versionFunctions: false
+  iamRoleStatements:
+  - Effect: Allow
+    Action:
+    - lambda:InvokeFunction
+    - lambda:InvokeAsync
+    Resource: '*'
+  stackPolicy:
+  - Effect: Allow
+    Principal: '*'
+    Action: 
+    - Update:*
+    Resource: '*'
+  - Effect: Deny
+    Principal: '*'
+    Action:
+    - Update:Replace
+    - Update:Delete
+    Condition:
+      StringEquals:
+        ResourceType:
+        - AWS::EC2::Instance
+custom:
+  stage: ${opt:stage,self:provider.stage}
+  version: 0.0.1-SNAPSHOT
+package:
+  artifact: target/lambda.jar
+functions:
+  slack:
+    handler: io.symphonia.CPLambda::handler
+    environment:
+# insert your own link here. See https://my.slack.com/services/new/incoming-webhook/
+      SLACK_URL: https://hooks.slack.com/services/TXXX/BXXX/xxx
+resources:
+  Resources:
+    CodePipelineEvent:
+      Type: AWS::Events::Rule
+      Properties:
+        Description: CodePipelineEvent
+        EventPattern:
+          source:
+          - aws.codepipeline
+#          detail-type:
+#          - CodePipeline Pipeline Execution State Change
+#        State: ENABLED
+        Targets:
+        # Insert your own arn here or find a solution to automatically add the arn of the new lambda function
+        - Arn: arn:aws:lambda:${self:provider.region}:123456789:function:slack-${self:custom.stage}-slack
+          Id: CodePipeline2LambdaTarget
+    s3Lambda:
+      Type: 'AWS::S3::Bucket'
+      Properties:
+        BucketName: ${self:custom.stage}-lambda
+        CorsConfiguration:
+          CorsRules:
+          - AllowedMethods:
+            - GET
+            - HEAD
+            AllowedOrigins:
+            - "*"
+            AllowedHeaders:
+            - "*"
+          
