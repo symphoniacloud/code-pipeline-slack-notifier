@@ -2,6 +2,11 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: Code Pipeline Slack Notifier
 
+Parameters:
+  SlackUrl:
+    AllowedPattern : ".+"
+    Type: String
+
 Resources:
   CodePipelineEvent:
     Type: AWS::Events::Rule
@@ -21,15 +26,15 @@ Resources:
   CPLambda:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: io.symphonia.CPLambda::handler
-      Runtime: java8
-      MemorySize: 512
+      Handler: lib/index.handler
+      Runtime: nodejs6.10
+      MemorySize: 128
       Timeout: 10
-      CodeUri: ./target/lambda.jar
+      CodeUri: ./target/lambda.zip
       Environment:
         Variables:
-          # Enter your actual Slack URL in the value below
-          SLACK_URL: ""
+          SLACK_URL:
+            Ref: SlackUrl
 
   CPLambdaInvokePermission:
     Type: AWS::Lambda::Permission

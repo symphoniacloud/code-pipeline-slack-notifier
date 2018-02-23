@@ -5,23 +5,29 @@ This small Lambda app will post updates to a Slack channel for pipeline events g
 ## Prerequisites
 
 * AWS Account using Code Pipeline. Otherwise there's not much point to this. :)
-* Slack account, and an **incoming webhook** URL you can use to post to it
+* Slack account, and an **incoming webhook** URL you can use to post to it. This will be something like `https://hooks.slack.com/services/....`
+
+And if installing manually...
+
 * An AWS user with sufficient privileges to deploy the included CloudFormation stack
 * An S3 bucket that you can use as a location of your build artifact. You should have write privileges to this
 from your AWS user.
-* Locally: Java 8, Maven, and an at least relatively recent version of the AWS CLI
+* Locally: Node, and an at least relatively recent version of the AWS CLI
+
+Alternatively, use the Severless Application Repo version at **TODO - URL HERE**
 
 ## Setup
 
-1. Update the `SLACK_URL` in the `sam.yml` file to be your Slack incoming webhook URL. It should look something
-like `https://hooks.slack.com/services/....`
-
-1. Run the following from a terminal, substituting `YOUR_S3_BUCKET` for the S3 bucket described above:
+1. Run the following from a terminal, substituting `YOUR_S3_BUCKET` for the S3 bucket described above, and `YOUR-INCOMING-WEBHOOK-URL` for the Slack URL described above:
 
     ```bash
-    $ mvn package
+    $ npm install
 
-    $ aws cloudformation package --template-file sam.yml --s3-bucket YOUR_S3_BUCKET --output-template-file packaged-template.yaml
+    $ npm run dist
+
+    $ aws cloudformation package --template-file sam.yml --s3-bucket YOUR_S3_BUCKET --output-template-file target/packaged-template.yaml
+
+    $ aws cloudformation deploy --template-file ./target/packaged-template.yaml --stack-name cp-slack-notifier --parameter-overrides SlackUrl=YOUR-INCOMING-WEBHOOK-URL --capabilities CAPABILITY_IAM
 
     $ aws cloudformation deploy --template-file packaged-template.yaml --stack-name cp-slack-notifier --capabilities CAPABILITY_IAM
     ```
