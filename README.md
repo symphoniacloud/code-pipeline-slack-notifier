@@ -28,8 +28,6 @@ Alternatively, use the Severless Application Repo version at **TODO - URL HERE**
     $ aws cloudformation package --template-file sam.yml --s3-bucket YOUR_S3_BUCKET --output-template-file target/packaged-template.yaml
 
     $ aws cloudformation deploy --template-file ./target/packaged-template.yaml --stack-name cp-slack-notifier --parameter-overrides SlackUrl=YOUR-INCOMING-WEBHOOK-URL --capabilities CAPABILITY_IAM
-
-    $ aws cloudformation deploy --template-file packaged-template.yaml --stack-name cp-slack-notifier --capabilities CAPABILITY_IAM
     ```
 
 1. Wait for CloudFormation to do its thing
