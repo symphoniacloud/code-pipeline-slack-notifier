@@ -28,7 +28,7 @@ const expectedSlackMessage = {
   }
   ,
   json: {
-    text: "Pipeline (JS) serverless-weather-build-CodePipeline-ABCDEFGHIJKL STARTED"
+    text: "Pipeline serverless-weather-build-CodePipeline-ABCDEFGHIJKL STARTED"
   }
 };
 
