@@ -1,0 +1,49 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Code Pipeline Slack Notifier
+Parameters:
+  SlackUrl:
+    AllowedPattern: .+
+    Type: String
+Resources:
+  CPLambda:
+    Properties:
+      CodeUri: s3://symphonia-oss/sar/code-pipeline-slack-notifier/47f64d4cacc768f4e6a4a5fab3791306
+      Environment:
+        Variables:
+          SLACK_URL:
+            Ref: SlackUrl
+      Handler: lib/index.handler
+      MemorySize: 128
+      Runtime: nodejs6.10
+      Timeout: 10
+    Type: AWS::Serverless::Function
+  CPLambdaInvokePermission:
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+        - CPLambda
+        - Arn
+      Principal: events.amazonaws.com
+      SourceArn:
+        Fn::GetAtt:
+        - CodePipelineEvent
+        - Arn
+    Type: AWS::Lambda::Permission
+  CodePipelineEvent:
+    Properties:
+      Description: CodePipelineEvent
+      EventPattern:
+        detail-type:
+        - CodePipeline Pipeline Execution State Change
+        source:
+        - aws.codepipeline
+      State: ENABLED
+      Targets:
+      - Arn:
+          Fn::GetAtt:
+          - CPLambda
+          - Arn
+        Id: MyCodePipelineTarget
+    Type: AWS::Events::Rule
+Transform: AWS::Serverless-2016-10-31

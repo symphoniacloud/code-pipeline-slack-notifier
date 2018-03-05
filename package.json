@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "test": "mocha",
-    "dist": "mkdir target ; zip -r target/lambda lib node_modules"
+    "dist": "mkdir target ; zip -r target/lambda lib node_modules LICENSE README.md"
   },
   "devDependencies": {
     "mocha": "^3.5.0"
