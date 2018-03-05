@@ -24,9 +24,10 @@ This only works if you are deployed to the us-east-1 region. If you aren't, use 
 
 Run the following from a terminal, substituting `YOUR-INCOMING-WEBHOOK-URL` for the Slack URL described above:
 
-    ```bash
+```bash
     $ aws cloudformation deploy --template-file ./prebuilt-templates/packaged-template.yaml --stack-name cp-slack-notifier --parameter-overrides SlackUrl=YOUR-INCOMING-WEBHOOK-URL --capabilities CAPABILITY_IAM
-    ```
+    
+```
 
 1. Wait for CloudFormation to do its thing
 
