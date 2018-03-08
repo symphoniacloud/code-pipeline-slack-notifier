@@ -7,7 +7,7 @@ Parameters:
 Resources:
   CPLambda:
     Properties:
-      CodeUri: s3://symphonia-oss/sar/code-pipeline-slack-notifier/835954a632200823a93c7783ff090398
+      CodeUri: s3://symphonia-oss/sar/code-pipeline-slack-notifier/9853ab73e0e7eb9cc6a38e695a680742
       Environment:
         Variables:
           SLACK_URL:
