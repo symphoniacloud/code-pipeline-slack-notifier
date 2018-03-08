@@ -8,21 +8,6 @@ Parameters:
     Type: String
 
 Resources:
-  CodePipelineEvent:
-    Type: AWS::Events::Rule
-    Properties:
-      Description: "CodePipelineEvent"
-      EventPattern:
-        source:
-        - aws.codepipeline
-        detail-type:
-        - CodePipeline Pipeline Execution State Change
-      State: "ENABLED"
-      Targets:
-        -
-          Arn: !GetAtt CPLambda.Arn
-          Id: "MyCodePipelineTarget"
-
   CPLambda:
     Type: AWS::Serverless::Function
     Properties:
@@ -35,12 +20,12 @@ Resources:
         Variables:
           SLACK_URL:
             Ref: SlackUrl
-
-  CPLambdaInvokePermission:
-    Type: AWS::Lambda::Permission
-    Properties:
-      FunctionName: !GetAtt CPLambda.Arn
-      Action: 'lambda:InvokeFunction'
-      Principal: events.amazonaws.com
-      SourceArn: !GetAtt CodePipelineEvent.Arn
-
+      Events:
+        CodePipelineEvent:
+          Type: CloudWatchEvent
+          Properties:
+            Pattern:
+              source:
+              - aws.codepipeline
+              detail-type:
+              - CodePipeline Pipeline Execution State Change
