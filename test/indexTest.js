@@ -24,19 +24,22 @@ const expectedSlackMessage = {
   url: "http://foo/bar",
   method: 'POST',
   headers: {
-      'Content-Type': 'application/json'
+    'Content-Type': 'application/json'
   }
   ,
   json: {
-    text: "Pipeline serverless-weather-build-CodePipeline-ABCDEFGHIJKL STARTED"
+    attachments: [
+      {
+        "color": "#888888",
+        "text": "CodePipeline serverless-weather-build-CodePipeline-ABCDEFGHIJKL has started."
+      }]
   }
 };
 
-describe('generateRequestDetails', function() {
-  it('should generate correct details to post to slack', function() {
-
+describe('generateRequestDetails', function () {
+  it('should generate correct details to post to slack', function () {
     assert.deepEqual(
       expectedSlackMessage,
-      index.generateRequestDetails(testInput,"http://foo/bar"));
+      index.generateRequestDetails(testInput, "http://foo/bar"));
   });
 });
