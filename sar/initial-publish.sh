@@ -33,7 +33,6 @@ fi
 # THIS DOESN'T WORK! :) So created manually
 # AWS CLI barfing on source-code-url, and if that's taken out then it complains with:
 # An error occurred (BadRequestException) when calling the CreateApplication operation: Resource with name [template] is invalid. Expected input as dictionary, instead got <type 'str'>
-# Mikes-MacBook-Pro-2:code-pipeline-slack-notifier mike$ cat target/packaged-template.yaml
 
 aws serverlessrepo create-application \
 --author "Symphonia" \
