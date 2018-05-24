@@ -63,7 +63,7 @@ If you'd like to test the app, you can configure the following test event in the
 
 1. To change which types of events you want to be notified about you can specify a filter within the
 Cloudwatch Event rule. For instance, to only notify on failed runs of the pipeline, update the `EventPattern` section
-of the `CloudPipelineEvent` in the `sam.yml` file as follows:
+of the `CodePipelineEvent` in the `sam.yml` file as follows:
 
     ```yaml
       EventPattern:
