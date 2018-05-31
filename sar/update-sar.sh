@@ -1,24 +1,48 @@
 #!/bin/bash
 
+usage="Usage: update-sar.sh -id SAR-APP-ID -v SEMANTIC-VERSION"
+
+while [[ $# -gt 1 ]]
+do
+KEY="$1"
+
+case $KEY in
+    -id)
+    SAR_APP_ID="$2"
+    shift # past argument
+    ;;
+    -v|--version)
+    SEMANTIC_VERSION="$2"
+    shift # past argument
+    ;;
+    *)
+            # unknown option
+    ;;
+esac
+shift # past argument or value
+done
+
+if [[ -z "$SAR_APP_ID" ]]; then
+    echo "SAR-APP-ID not set"
+    echo "$usage"
+    exit 1
+fi
+
+if [[ -z "$SEMANTIC_VERSION" ]]; then
+    echo "SEMANTIC-VERSION not set"
+    echo "$usage"
+    exit 1
+fi
+
 set -eu
 
-# ./upload-package.sh
+if [ ! -f ../target/packaged-template.yaml ]; then
+    echo "Unable to find target/packaged-template.yaml - did you run upload-package successfully? Are you running from the sar directory?"
+    exit 1
+fi
 
-# THIS DOESN'T WORK EITHER - also failing on the source-code-url
-# aws serverlessrepo create-application-version \
-# --application-id 'arn:aws:serverlessrepo:us-east-1:392967531616:applications/CodePipelineSlackNotifier' \
-# --semantic-version '1.0.1' \
-# --template-body target/packaged-template.yaml \
-# --source-code-url 'https://github.com/symphoniacloud/code-pipeline-slack-notifier'
-
-# aws serverlessrepo create-application \
-# --author "Symphonia" \
-# --description "Post notifications to Slack when Code Pipeline Events occur" \
-# --labels "CodePipeline" "Slack" \
-# --license-body LICENSE \
-# --name "CodePipelineSlackNotifier" \
-# --readme-body README-SAR.md \
-# --semantic-version "1.0.0" \
-# --spdx-license-id "Apache-2.0" \
-# --template-body target/packaged-template.yaml \
-# --source-code-url https://github.com/symphoniacloud/code-pipeline-slack-notifier
+aws serverlessrepo create-application-version \
+--application-id $SAR_APP_ID \
+--semantic-version $SEMANTIC_VERSION \
+--template-body "file://../target/packaged-template.yaml" \
+--region us-east-1
