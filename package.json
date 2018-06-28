@@ -7,9 +7,10 @@
     "dist": "mkdir target ; zip -r target/lambda lib node_modules LICENSE README.md"
   },
   "devDependencies": {
-    "mocha": "^3.5.0"
+    "mocha": "^5.2.0"
   },
   "dependencies": {
-    "request": "^2.83.0"
+    "npm": "^6.1.0",
+    "request": "^2.87.0"
   }
 }
