@@ -22,7 +22,7 @@ The easiest way to use this application is via the AWS Serverless Application Re
 If you want to consume the SAR app as a nested stack (great for putting under source control!) then you can use ``sam init`` to create a template project as follows (This requires the [SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)):
 
    ```bash
-    $ sam init sam init --location gh:symphoniacloud/code-pipeline-slack-notifier
+    $ sam init --location gh:symphoniacloud/code-pipeline-slack-notifier
    ```
 
 .. and follow the prompts. Once complete, change into the generated directory and run ``deploy.sh`` to complete, or put the generated project into your typical deployment pipeline flow.
