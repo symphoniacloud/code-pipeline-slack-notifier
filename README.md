@@ -6,19 +6,28 @@ This small Lambda app will post updates to a Slack channel for pipeline events g
 
 If you have Code Pipelines in multiple accounts / sub-accounts and/or regions then you'll need to deploy this application to each account+region combo that you have your Code Pipelines in.
 
+## Prerequisites
+
+* AWS Account using Code Pipeline. Otherwise there's not much point to this. :)
+* [Slack](https://slack.com/) account, and an [**incoming webhook**](https://api.slack.com/incoming-webhooks) URL 
+you can use to post to it. This will be something like `https://hooks.slack.com/services/....`
+* An AWS user with sufficient privileges to deploy the application from the AWS Serverless Application Repository
+* An S3 bucket that you can use as a location of your build artifact. You should have write privileges to this from your AWS user.
+* Locally: At least relatively recent version of the AWS CLI, and Node if you are building from source
+
 ## Serverless Application Repository App
 
 The easiest way to use this application is via the AWS Serverless Application Repo. You can find it [here](https://serverlessrepo.aws.amazon.com/applications/arn:aws:serverlessrepo:us-east-1:392967531616:applications~CodePipelineSlackNotifier) .
 
+If you want to consume the SAR app as a nested stack (great for putting under source control!) then you can use ``sam init`` to create a template project as follows (This requires the [SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)):
+
+   ```bash
+    $ sam init sam init --location gh:symphoniacloud/code-pipeline-slack-notifier
+   ```
+
+.. and follow the prompts. Once complete, change into the generated directory and run ``deploy.sh`` to complete, or put the generated project into your typical deployment pipeline flow.
+
 If you can't, or don't want to, use the SAR version, then carry on here...
-
-## Prerequisites
-
-* AWS Account using Code Pipeline. Otherwise there's not much point to this. :)
-* [Slack](https://slack.com/) account, and an [**incoming webhook**](https://api.slack.com/incoming-webhooks) URL you can use to post to it. This will be something like `https://hooks.slack.com/services/....`
-* An AWS user with sufficient privileges to deploy the application from the AWS Serverless Application Repository
-* An S3 bucket that you can use as a location of your build artifact. You should have write privileges to this from your AWS user.
-* Locally: Node, and an at least relatively recent version of the AWS CLI
 
 ## Setup
 
