@@ -1,0 +1,13 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Testing Nested SAR App
+
+Resources:
+    MyNestedCodePipelineSlackNotifier:
+        Type: AWS::Serverless::Application
+        Properties:
+            Location:
+                ApplicationId: arn:aws:serverlessrepo:us-east-1:392967531616:applications/CodePipelineSlackNotifier
+                SemanticVersion: 1.0.2
+            Parameters:
+                SlackUrl: {{ cookiecutter.slack_url }}
