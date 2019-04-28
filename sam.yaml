@@ -7,12 +7,27 @@ Parameters:
     AllowedPattern : ".+"
     Type: String
 
+Metadata:
+  AWS::ServerlessRepo::Application:
+    Name: CodePipelineSlackNotifier
+    Description: Post notifications to Slack when Code Pipeline Events occur
+    Author: Symphonia
+    HomePageUrl: https://github.com/symphoniacloud/code-pipeline-slack-notifier
+    SourceCodeUrl: https://github.com/symphoniacloud/code-pipeline-slack-notifier
+    ReadmeUrl: README.md
+    SpdxLicenseId: Apache-2.0
+    LicenseUrl: LICENSE
+    Labels:
+      - CodePipeline
+      - Slack
+    SemanticVersion: 1.0.3
+
 Resources:
   CPLambda:
     Type: AWS::Serverless::Function
     Properties:
       Handler: lib/index.handler
-      Runtime: nodejs6.10
+      Runtime: nodejs8.10
       MemorySize: 128
       Timeout: 10
       CodeUri: ./target/lambda.zip
