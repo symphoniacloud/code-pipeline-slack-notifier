@@ -8,6 +8,6 @@ Resources:
         Properties:
             Location:
                 ApplicationId: arn:aws:serverlessrepo:us-east-1:392967531616:applications/CodePipelineSlackNotifier
-                SemanticVersion: 1.0.3
+                SemanticVersion: 1.0.4
             Parameters:
                 SlackUrl: {{ cookiecutter.slack_url }}

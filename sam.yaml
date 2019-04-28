@@ -20,7 +20,7 @@ Metadata:
     Labels:
       - CodePipeline
       - Slack
-    SemanticVersion: 1.0.3
+    SemanticVersion: 1.0.4
 
 Resources:
   CPLambda:
