@@ -38,7 +38,7 @@ If you can't, or don't want to, use the SAR version, then carry on here...
 
     $ npm run dist
 
-    $ aws cloudformation package --template-file sam.yml --s3-bucket YOUR_S3_BUCKET --output-template-file target/packaged-template.yaml
+    $ aws cloudformation package --template-file sam.yaml --s3-bucket YOUR_S3_BUCKET --output-template-file target/packaged-template.yaml
 
     $ aws cloudformation deploy --template-file ./target/packaged-template.yaml --stack-name cp-slack-notifier --parameter-overrides SlackUrl=YOUR-INCOMING-WEBHOOK-URL --capabilities CAPABILITY_IAM
     ```
