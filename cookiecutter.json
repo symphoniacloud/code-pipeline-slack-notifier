@@ -1,5 +1,0 @@
-{
-	"project_name": "Name of the project / stack",
-	"slack_url": "Slack incoming webhook URL that you can post to",
-	"s3_deployment_bucket": "Where to put SAM / CloudFormation deployment artifact"
-}
